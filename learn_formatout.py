@@ -55,3 +55,29 @@ print('左右各取10位对齐：{:10s}， {:>10s}'.format('hello', 'world'))
 print('取10位中间对齐：{:^10s}， {:^10s}'.format('hello', 'world'))
 print('取2位小数：{} is {:.2f}'.format(3.141592,  3.141592))
 print('数值的千位分割符：{} is {:,}'.format(123456789, 1234567890))
+
+输出：
+12
+10
+10.000000
+1.00e+01
+10
+3.141593
+3.14
+7.283
+hello world
+hello hello world
+e
+hello, world
+hello, world
+e
+hello, world
+hello, world
+27
+M
+Tom is 18 years old
+默认输出：hello， world
+左右各取10位对齐：hello     ，      world
+取10位中间对齐：  hello   ，   world   
+取2位小数：3.141592 is 3.14
+数值的千位分割符：123456789 is 1,234,567,890
