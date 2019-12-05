@@ -99,55 +99,60 @@ temp = np.array([[1., 2., 3.], [4., 5., 6.]])
 c7 = np.empty_like(temp)
 print("a7={}\nb7={}\nc7={}".format(a7, b7, c7))
 
-#################################
-输出：
-1.16.2
-<class 'numpy.ndarray'>
-(4,)
-[0.04899119 0.88943573 0.12171455 0.20854629]
-5
-5.0
-42.0
-True
-1.0
-{<class 'numpy.float64'>, <class 'numpy.complex128'>, <class 'numpy.float16'>, <class 'numpy.bytes_'>, <class 'numpy.uint16'>, <class 'numpy.complex64'>, <class 'numpy.complex128'>, <class 'numpy.timedelta64'>, <class 'numpy.int32'>, <class 'numpy.uint8'>, <class 'numpy.float64'>, <class 'numpy.void'>, <class 'numpy.int64'>, <class 'numpy.uint32'>, <class 'numpy.object_'>, <class 'numpy.int8'>, <class 'numpy.int32'>, <class 'numpy.uint64'>, <class 'numpy.int16'>, <class 'numpy.uint32'>, <class 'numpy.str_'>, <class 'numpy.datetime64'>, <class 'numpy.float32'>, <class 'numpy.bool_'>}
-<class 'numpy.ndarray'>
-[list([1, 2]) list([4, 5, 7])]
-<class 'range'>
-[0, 1, 2, 3]
-[0, 1, 2, 3]
-[ 0  1  2  3  4  5  6  7  8  9 10 11]
-[1.  1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9]
-[1.         1.44444444 1.88888889 2.33333333 2.77777778 3.22222222
- 3.66666667 4.11111111 4.55555556 5.        ]
-(10,)
-[1.  1.4 1.8 2.2 2.6 3.  3.4 3.8 4.2 4.6]
-(10,)
-[1.         1.44444444 1.88888889 2.33333333 2.77777778 3.22222222
- 3.66666667 4.11111111 4.55555556 5.        ]
-[  1.           3.16227766  10.          31.6227766  100.        ]
-[1. 1. 1. 1. 1.]
-a5=[1. 1. 1. 1.]
-b5=[1 1 1 1]
-c5=[[1.]
- [1.]]
-d5=[[1. 1.]
- [1. 1.]]
-e5=[1. 1. 1. 1.]
-a6=[0. 0. 0. 0. 0.]
-b6=[0 0 0 0 0]
-c6=[[0.]
- [0.]]
-d6=[[0. 0.]
- [0. 0.]]
-e6=[(0, 0) (0, 0)]
-f=[[0 0 0]
- [0 0 0]]
-y=[0. 1. 2.]
-g=[0. 0. 0.]
-a7=[[6.23042070e-307 4.67296746e-307 1.69121096e-306 1.11258022e-307]
- [8.34441742e-308 1.42420481e-306 1.24612013e-306 3.91910665e+202]]
-b7=[[         0 1072693248]
- [         0 1073741824]]
-c7=[[1.99549395e+161 9.77824555e+199 6.01334653e-154]
- [6.01347002e-154 1.69375270e+190 2.35569008e+251]]
+# eye(N, M=None, k=0, dtype=float)根据给定参数，生产第k个对角线元素为1、其他元素为0的数组
+a8 = np.eye(2, dtype=int)
+b8 = np.eye(3, 4, dtype=int)
+c8 = np.eye(3, k=1)   # k默认0，生产主对角线元素为1；k为正指主对角线上移对应数；k为负指主对角线下移对应数
+print("a8={}\nb8={}\nc8{}".format(a8, b8, c8))
+
+# identity(n, dtype=None)建立n维单位方阵
+a9 = np.identity(3)
+print(a9)
+
+# 索引：通过下表索引找到对应的存储空间
+a10 = np.arange(1, 6)
+# 使用正数作为索引
+print(a10[3])
+# 使用负数作为索引
+print(a10[-4])
+# 方括号中传入索引值，可同时选择多个元素
+print(a10[[0, 3, 4]])
+
+# 切片[start:stop:step]：通过下标或下标范围获得一组序列的元素
+a11 = np.arange(16)      # 创建一维数组[0……15]
+a11 = a11.reshape(4, 4)  # 更改数组形状
+print(a11)
+print(a11[1][2])       # 第2行第3列  ！！输出元素
+print(a11[1, 2])       # 第2行第3列
+
+print(a11[1:])         # 第2行及以下行 ！！输出数组
+print(a11[:3])         # 第3行及以上行
+print(a11[::2])        # 步进2，隔行输出
+print(a11[1:2])        # 第2行
+print(a11[1:2, 2:3])   # 第2行，第3列  ！！输出数组，与a11[1][2]输出不同
+
+# 布尔型索引，又叫花式索引，利用整数数组进行索引
+a12 = (np.arange(16)).reshape(4, 4)  # 生成4*4数组
+x = np.array([0, 1, 2, 1])
+x == 1    # 通过比较运算得到一个布尔数组
+print(a12)
+print(x == 1)          # x==1时为True
+print(a12[x == 1])     # 输出True的行
+print(a12[:, x == 1])  # 输出True的列
+
+print(a12[x != 1])     # ！取反，x！=1时为True
+print(a12[~(x == 1)])  # ~取反，x！=1时为True
+print(a12[np.logical_not(x == 1)])  # logical_not()表示取否定
+# 多条件组合布尔索引
+print(a12[(x == 1) | (x == 2)])
+
+# 利用布尔型索引实现图像分割
+import matplotlib.pyplot as plt
+a13 = np.linspace(0, 2 * np.pi, 200)    # 产生[0,2pi]之间的200点行线性的矢量
+b13 = np.sin(a13)                       # 产生正弦曲线
+plt.plot(a13, b13)                      # 绘制以a为横坐标，b为纵坐标的图像
+mask = b13 >= 0                         # b>=0
+plt.plot(a13[mask], b13[mask], 'bo')    # 绘制b>=0的部分，bo——蓝色圆点
+mask = (b13 >= 0) & (a13 <= np.pi / 2)  # b>=0且a<=pi/2
+plt.plot(a13[mask], b13[mask], 'go')    # 绘制b>=0且a<=pi/2的部分，go——绿色圆点
+plt.show()
